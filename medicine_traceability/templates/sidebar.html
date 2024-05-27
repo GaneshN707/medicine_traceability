@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block body%}
+{% if user.is_authenticated %}
+
+<!-- Sidebar -->
+<div class="container-fluid mx-0">
+  <div class="row">
+    <div class="col-lg-3 bg-primary" style="height:700px;">
+      <div class="mt-3 bg-light">
+        <div class="row text-center">
+          {% if user_type == "Manufacturer" %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'admedicine' %}" class="text-dark">ADD MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'Show_data' %}" class="text-dark">Show Data</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% elif user_type == "Customer" %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% else %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'scan_qr' %}" class="text-dark">SCAN QR</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="card card-4">
+        <div class="m-3">
+          <h1>Medicine traceability</h1>
+        <p>Medicine Traceability using blockchain is a concept that leverages blockchain technology to enhance the tracking and tracing of pharmaceutical products throughout the supply chain. Here's a description of how it works and its benefits:</p>
+
+        <h5 class="mt-3">Blockchain Technology: </h5>
+        <p>Blockchain is a distributed ledger technology that enables secure, transparent, and immutable record-keeping. Each transaction or record is cryptographically linked to the previous one, forming a chain of blocks, hence the name blockchain.</p>
+
+        <h5 class="mt-3">Medicine Traceability:</h5> 
+        <p>Medicine traceability refers to the ability to track and trace pharmaceutical products as they move through the supply chain, from the manufacturer to the end consumer. It involves recording and monitoring the movement of medicines at each stage of the supply chain to ensure authenticity, prevent counterfeiting, and enhance safety and quality.</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock body %}

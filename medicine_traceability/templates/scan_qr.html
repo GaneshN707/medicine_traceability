@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<!-- Sidebar -->
+<div class="container-fluid mx-0">
+  <div class="row">
+    <div class="col-lg-3 bg-primary" style="height:700px;">
+      <div class="mt-3 bg-light">
+        <div class="row text-center">
+          {% if user_type == "Manufacturer" %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'admedicine' %}" class="text-dark">ADD MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'Show_data' %}" class="text-dark">Show Data</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% elif user_type == "Customer" %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% else %}
+          <div class="col-lg-12 mt-4">
+            <h5><a href="{% url 'tracemedicine' %}" class="text-dark">TRACE MEDICINE</a></h5>
+            <hr style="color:primary;">
+          </div>
+          <div class="col-lg-12">
+            <h5><a href="{% url 'scan_qr' %}" class="text-dark">SCAN QR</a></h5>
+            <hr style="color:primary;">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="p-t-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+          <div class="card card-4">
+            <div class="card-body text-center">
+              <h2>Scan QR Code to add Medicine in your Stock.</h2>
+              <button class="btn btn--radius-2 btn--blue mx-auto" id="cameraButton">Scan QR Code</button>
+              <video id="cameraFeed" autoplay="true"></video>
+
+              <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+              <script>
+                document.getElementById('cameraButton').addEventListener('click', function () {
+                  let scanner = new Instascan.Scanner({ video: document.getElementById('cameraFeed') })
+
+                  scanner.addListener('scan', function (content) {
+                    // Redirect to scan_qr page with QR code value
+                    window.location.href = '/scaned_qr/' + encodeURIComponent(content);
+                  })
+
+                  Instascan.Camera.getCameras()
+                    .then(function (cameras) {
+                      if (cameras.length > 0) {
+                        scanner.start(cameras[0])
+                      } else {
+                        console.error('No cameras found.')
+                      }
+                    })
+                    .catch(function (e) {
+                      console.error(e)
+                    })
+                })
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
